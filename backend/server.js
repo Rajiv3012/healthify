@@ -14,7 +14,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'healthify-super-secret-key-for-jwt-auth';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+    throw new Error('JWT_SECRET is required. Define it in your environment variables.');
+}
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/healthify')
     .then(() => console.log('✅ MongoDB connected'))
